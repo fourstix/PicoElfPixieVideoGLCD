@@ -74,7 +74,7 @@ Notes
   * During DMA the interrupt handler will read the video data byte from Port D (pins 2, 14, 7, 8, 6, 20, 21, 5)
   * There are 8 bytes of video data read per frame line.
   * Video data is captured every other DMA line and stored in a Video Buffer
-* **Frame rate and GLCD update rate**
+* **Frame rate and GLCD updates**
   * After one complete frame of data is captured, the GLCD display will be updated.
   * Any SPI 64 x 128 GLCD supported by U8G2 should work as a display.
   * If the captured video data does not change, the display will not be updated for that frame.
