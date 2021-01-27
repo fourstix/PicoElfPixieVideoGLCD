@@ -2,7 +2,7 @@
 Teensy 3.2 based Pixie Video simulator for the 1802 Pico/Elf v2 microcomputer using a GLCD with SPI
 
 This code simulates a cdp1861 Pixie Video chip, using a [Teensy 3.2.](https://www.pjrc.com/store/teensy32.html)
-This [simulator](https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/main/docs/PicoELfPixieVideoGLCD.pdf)
+This [simulator](https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/main/docs/PicoElfPixieVideoGLCD.pdf)
 uses a video ram buffer with a 128 x 64 graphics display supported by the
 [U8G2 graphics library](https://github.com/olikraus/u8g2) as a video display.  The code will simulate
 the interrupts, external flag 1 signal, and DMA Output requests from the original pixie video.  This
@@ -78,8 +78,9 @@ Notes
   * After one complete frame of data is captured, the GLCD display will be updated.
   * Any SPI 64 x 128 GLCD supported by U8G2 should work as a display.
   * If the captured video data does not change, the display will not be updated for that frame.
-  * The GLCD with SPI is usually fast enough to update within the frame, but if not, then during display update, interrupts  and control signals will continue, but data will not be captured for the frame. Programs will run correctly, even when data is not captured.
-  * The 1802 will see frames requests at rate of about 61/second when running on the Pico/Elf v2 hardware with a 4MHz clock speed.  Different clock speeds will need to adjust the END_BUFFER_CYCLES constant in the Teensy 3.2 PicoElfVideoGLCD.ino file.
+  * The GLCD with SPI is usually fast enough to update within a single frame, but if not, then during display update, interrupts  and control signals will continue, but data will not be captured for the frame. Programs will run correctly, even when data is not captured.
+  * The 1802 will see frames requests at rate of about 61/second when running on the Pico/Elf v2 hardware with a 4MHz clock speed.  Different clock speeds may need to adjust the END_BUFFER_CYCLES constant in the Teensy 3.2 PicoElfVideoGLCD.ino file to maintain the expected 61 interrupts per second rate of the original Pixie Video hardware.
+  * Further details are in the comments in the Teensy 3.2 PicoElfVideoGLCD.ino source code file.
 
 Repository Contents
 -------------------
