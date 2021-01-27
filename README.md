@@ -79,7 +79,7 @@ Notes
   * Any SPI 64 x 128 GLCD supported by U8G2 should work as a display.
   * If the captured video data does not change, the display will not be updated for that frame.
   * The GLCD with SPI is usually fast enough to update within the frame, but if not, then during display update, interrupts  and control signals will continue, but data will not be captured for the frame. Programs will run correctly, even when data is not captured.
-  * The 1802 will see frames requests at rate of about 61/second.
+  * The 1802 will see frames requests at rate of about 61/second when running on the Pico/Elf v2 hardware with a 4MHz clock speed.  Different clock speeds will need to adjust the END_BUFFER_CYCLES constant in the Teensy 3.2 PicoElfVideoGLCD.ino file.
 
 Repository Contents
 -------------------
