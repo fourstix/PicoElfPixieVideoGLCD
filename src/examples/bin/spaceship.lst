@@ -1,0 +1,397 @@
+
+C:\Users\[Your_Path]\elfos>C:\Users\[Your_Path]\rcasm\rcasm.exe -h -l -v -x -dC:\Users\[Your_Path]\rcasm\1802 C:\Users\[Your_Path]\elfos\spaceship 
+1802 -> Native
+2 Classes read.
+231 Patterns read.
+    1 0000:             ;  -------------------------------------------------------------------
+    2 0000:             ; Original Elf Pixie Graphic Program by Joseph A Weisbecker
+    3 0000:             ; Published in Popular Electronics, July 1979, pages 41-46
+    4 0000:             ; Copyright Joseph A Weisbecker 1976-1979
+    5 0000:             ;
+    6 0000:             ; Modified to run under the Elf/OS with the Pico/Elf PixieVideo
+    7 0000:             ; Copyright 2021 by Gaston Williams
+    8 0000:             ;  -------------------------------------------------------------------
+    9 0000:             ; *** Based on software written by Michael H Riley
+   10 0000:             ; *** Thanks to the author for making this code available.
+   11 0000:             ; *** Original author copyright notice:
+   12 0000:             ; *******************************************************************
+   13 0000:             ; *** This software is copyright 2004 by Michael H Riley          ***
+   14 0000:             ; *** You have permission to use, modify, copy, and distribute    ***
+   15 0000:             ; *** this software so long as this copyright notice is retained. ***
+   16 0000:             ; *** This software may not be used in commercial applications    ***
+   17 0000:             ; *** without express written permission from the author.         ***
+   18 0000:             ; *******************************************************************
+   19 0000:
+   20 0000:             ; Uncomment the line below to assemble a ROM program
+   21 0000:             ; Comment out to assemble a stand alone program
+   22 0000:             ;#DEFINE _ROM_ 1
+   23 0000:
+   24 0000:             include    bios.inc
+   25 0000:             ; *******************************************************************
+   26 0000:             ; *** This software is copyright 2006 by Michael H Riley          ***
+   27 0000:             ; *** You have permission to use, modify, copy, and distribute    ***
+   28 0000:             ; *** this software so long as this copyright notice is retained. ***
+   29 0000:             ; *** This software may not be used in commercial applications    ***
+   30 0000:             ; *** without express written permission from the author.         ***
+   31 0000:             ; *******************************************************************
+   32 0000:
+            #endif
+   36 0000:
+   37 0000:             ; Define address for standard BIOS vectors
+            #endif
+   41 0000:
+   42 0000:             ; Define address for extended BIOS vectors
+            #endif
+   46 0000:
+            #ifndef _TASM_
+   48 0000:             scall:      equ  r4                    ; register for SCALL
+   49 0000:             sret:       equ  r5                    ; register for SRET
+   50 0000:
+   51 0000:             call:       equ  0ffe0h                ; depricated
+   52 0000:             ret:        equ  0fff1h                ; depricated
+            #endif
+   54 0000:
+   55 0000:             f_boot:     equ  (BIOS+00h)            ; boot from ide device
+   56 0000:             f_type:     equ  (BIOS+03h)            ; type 1 character to console
+   57 0000:             f_read:     equ  (BIOS+06h)            ; read 1 character from console
+   58 0000:             f_msg:      equ  (BIOS+09h)            ; type asciiz string to console
+   59 0000:             f_typex:    equ  (BIOS+0ch)            ; depricated, just returns now
+   60 0000:             f_input:    equ  (BIOS+0fh)            ; read asciiz from console
+   61 0000:             f_strcmp:   equ  (BIOS+12h)            ; compare 2 strings
+   62 0000:             f_ltrim:    equ  (BIOS+15h)            ; trim leading spaces
+   63 0000:             f_strcpy:   equ  (BIOS+18h)            ; copy an asciiz string
+   64 0000:             f_memcpy:   equ  (BIOS+1bh)            ; copy memory
+   65 0000:             f_wrtsec:   equ  (BIOS+1eh)            ; write floppy sector (depricated)
+   66 0000:             f_rdsec:    equ  (BIOS+21h)            ; read floppy sector (depricated)
+   67 0000:             f_seek0:    equ  (BIOS+24h)            ; floppy seek to track 0 (depricated)
+   68 0000:             f_seek:     equ  (BIOS+27h)            ; floopy track seek (depricated)
+   69 0000:             f_drive:    equ  (BIOS+2ah)            ; select floppy drive (depricated)
+   70 0000:             f_setbd:    equ  (BIOS+2dh)            ; set console baud rate
+   71 0000:             f_mul16:    equ  (BIOS+30h)            ; 16-bit multiply
+   72 0000:             f_div16:    equ  (BIOS+33h)            ; 16-bit division
+   73 0000:             f_idereset: equ  (BIOS+36h)            ; reset ide device
+   74 0000:             f_idewrite: equ  (BIOS+39h)            ; write ide sector
+   75 0000:             f_ideread:  equ  (BIOS+3ch)            ; read ide sector
+   76 0000:             f_initcall: equ  (BIOS+3fh)            ; initialize R4 and R5
+   77 0000:             f_bootide:  equ  (BIOS+42h)            ; boot from ide device
+   78 0000:             f_hexin:    equ  (BIOS+45h)            ; convert ascii number to hex
+   79 0000:             f_hexout2:  equ  (BIOS+48h)            ; convert hex to 2-digit ascii
+   80 0000:             f_hexout4:  equ  (BIOS+4bh)            ; convert hex to 4-digit ascii
+   81 0000:             f_tty:      equ  (BIOS+4eh)            ; type character to console
+   82 0000:             f_mover:    equ  (BIOS+51h)            ; program relocator
+   83 0000:             f_minimon:  equ  (BIOS+54h)            ; mini monitor
+   84 0000:             f_freemem:  equ  (BIOS+57h)            ; determine memory size
+   85 0000:             F_isnum:    equ  (BIOS+5ah)            ; determine if D is numeric
+   86 0000:             f_atoi:     equ  (BIOS+5dh)            ; convert ascii to integer
+   87 0000:             f_uintout:  equ  (BIOS+60h)            ; convert unsigned integer to ascii
+   88 0000:             f_intout:   equ  (BIOS+63h)            ; convert signed integer to ascii
+   89 0000:             f_inmsg:    equ  (BIOS+66h)            ; type in-line message
+   90 0000:             f_inputl:   equ  (BIOS+69h)            ; read limited line from console
+   91 0000:             f_brktest:  equ  (BIOS+6ch)            ; check for serial break
+   92 0000:             f_findtkn:  equ  (BIOS+6fh)            ; find token in a token table
+   93 0000:             f_isalpha:  equ  (BIOS+72h)            ; determine if D is alphabetic
+   94 0000:             f_ishex:    equ  (BIOS+75h)            ; determine if D is hexadecimal
+   95 0000:             f_isalnum:  equ  (BIOS+78h)            ; determine if D is alpha or numeric
+   96 0000:             f_idnum:    equ  (BIOS+7bh)            ; determine type of ascii number
+   97 0000:             f_isterm:   equ  (BIOS+7eh)            ; determine if D is a termination char
+   98 0000:             f_getdev:   equ  (BIOS+81h)            ; get supported devices
+   99 0000:
+  100 0000:             f_version:  equ  (BIOS+0f9h)           ; 3 bytes holding bios version number
+  101 0000:
+  102 0000:             ; "Extended" BIOS vectors
+  103 0000:
+  104 0000:             f_bread     equ  (EBIOS+00h)        ; read from onboard serial port
+  105 0000:             f_btype     equ  (EBIOS+03h)        ; write to onboard serial port
+  106 0000:             f_btest     equ  (EBIOS+06h)        ; test onboard serial port
+  107 0000:             f_utype     equ  (EBIOS+09h)        ; write to disk board UART
+  108 0000:             f_uread     equ  (EBIOS+0ch)        ; read from disk board UART
+  109 0000:             f_utest     equ  (EBIOS+0fh)        ; test disk board UART
+  110 0000:             f_usetbd    equ  (EBIOS+12h)        ; set disk board UART baud rate and format
+  111 0000:             f_gettod    equ  (EBIOS+15h)        ; read time of day clock
+  112 0000:             f_settod    equ  (EBIOS+18h)        ; set time of day clock
+  113 0000:             f_rdnvr     equ  (EBIOS+1bh)        ; read non volatile RAM
+  114 0000:             f_wrnvr     equ  (EBIOS+1eh)        ; write non volatile RAM
+  115 0000:             f_idesize   equ  (EBIOS+21h)        ; return size of attached IDE drive(s)
+  116 0000:             f_ideid     equ  (EBIOS+24h)        ; return device data for IDE drive(s)
+  117 0000:             f_tmtoas    equ  (EBIOS+2ah)        ; time to ASCII string
+  118 0000:             f_dttoas    equ  (EBIOS+27h)        ; date to ASCII string
+  119 0000:             f_rtctest   equ  (EBIOS+2dh)        ; test size and presence of RTC/NVR
+  120 0000:             f_astodt    equ  (EBIOS+30h)        ; convert ASCII string to date
+  121 0000:             f_astotm    equ  (EBIOS+33h)        ; convert ASCII string to time
+  122 0000:
+  123 0000:
+  124 0000:             include    kernel.inc
+  125 0000:             O_CLDBOOT: equ     0300h               ; jump to cold boot routine
+  126 0000:             O_WRMBOOT: equ     0303h               ; jump to warm boot routine
+  127 0000:             O_OPEN:    equ     0306h               ; open a file
+  128 0000:             O_READ:    equ     0309h               ; read from file
+  129 0000:             O_WRITE:   equ     030ch               ; write to file
+  130 0000:             O_SEEK:    equ     030fh               ; seek to file position
+  131 0000:             O_CLOSE:   equ     0312h               ; close file
+  132 0000:             O_OPENDIR: equ     0315h               ; open dir as a file
+  133 0000:             O_DELETE:  equ     0318h               ; delete a file
+  134 0000:             O_RENAME:  equ     031bh               ; rename a file
+  135 0000:             O_EXEC:    equ     031eh               ; execute an external program
+  136 0000:             O_MKDIR:   equ     0321h               ; make directory
+  137 0000:             O_CHDIR:   equ     0324h               ; change directory
+  138 0000:             O_RMDIR:   equ     0327h               ; remove directory
+  139 0000:             O_RDLUMP:  equ     032Ah               ; read LAT entry
+  140 0000:             O_WRLUMP:  equ     032Dh               ; write LAT entry
+  141 0000:             O_TYPE:    equ     0330h               ; passthrough for console output
+  142 0000:             O_MSG:     equ     0333h               ; passthrough for console output
+  143 0000:             O_READKEY: equ     0336h               ; passthrough for console input
+  144 0000:             O_INPUT:   equ     0339h               ; passthrough for console input
+  145 0000:             O_PRTSTAT: equ     033ch               ; printer status
+  146 0000:             O_PRINT:   equ     033fh               ; output to printer
+  147 0000:             O_EXECBIN: equ     0342h               ; execute from default directory
+  148 0000:             O_SETDEF:  equ     0345h               ; set/get default directory
+  149 0000:             O_KINIT:   equ     0348h               ; reserved - do not use!!!
+  150 0000:
+            #ENDIF
+  175 0000:
+            #IFNDEF _ROM_
+  177 0000:             ; ************************************************************
+  178 0000:             ; This block generates the Execution header for a stand-alone
+  179 0000:             ; program. It begins 6 bytes before the program start.
+  180 0000:             ; ************************************************************
+  181 0000:
+  182 0000:                        org     02000h-6        ; Header starts at 01ffah
+  183 1ffa: 20 00                  dw      2000h
+  184 1ffc: 01 00                  dw      endrom-2000h
+  185 1ffe: 20 00                  dw      2000h
+            #ENDIF
+  187 2000:
+  188 2000: 30 09                  br      start
+  189 2002:             ; **************************************************
+  190 2002:             ; *** Build information:                         ***
+  191 2002:             ; ***    build date                              ***
+  192 2002:             ; ***    build number                            ***
+  193 2002:             ; ***    information text string                 ***
+  194 2002:             ; **************************************************
+  195 2002:             ; Build date format:
+  196 2002:             ; 80h+month, day, four digit year
+  197 2002:             ; **************************************************
+  198 2002:             ; 80h month offset indicates extended
+  199 2002:             ; build information, with build number and text.
+  200 2002:             ; **************************************************
+  201 2002:
+  202 2002: 81          date:      db      80h+1   ; January
+  203 2003: 0c                     db      12      ; Day
+  204 2004: 07 e5                  dw      2021    ; Year
+  205 2006: 00 03       build:     dw      3       ; build
+  206 2008: 00                     db      0       ; No room for information string
+  207 2009:
+  208 2009: 93          start:     ghi     r3            ; P=3, X=2 in Elf/OS
+  209 200a: b1                     phi     r1            ; Set up interrupt register
+  210 200b: f8 16                  ldi     low interrupt ; set interrupt address
+  211 200d: a1                     plo     r1            ; to point to interrupt handler
+  212 200e:
+  213 200e: f8 23                  ldi     023H          ; Value for x=2; p=3
+  214 2010: 52                     str     r2            ; Save for return instruction
+  215 2011: 70                     ret                   ; Keep x=2; p=3 and enable interrupts
+  216 2012:
+  217 2012: 30 32                  br      main          ; go to main routine and wait for interrupt
+  218 2014:
+  219 2014: 72          return:    ldxa                  ; restore D,
+  220 2015: 70                     ret                   ; return point X, P back to original locations
+  221 2016: 22          interrupt: dec     r2            ; move stack pointer
+  222 2017: 78                     sav                   ; save T register
+  223 2018: 22                     dec     r2            ; move stack pointer
+  224 2019: 52                     str     r2            ; Store D onto stack
+  225 201a: c4                     nop                   ; 3 nops = 9 cycles to make interrupt
+  226 201b: c4                     nop                   ; routine exactly the 29 instruction cycles
+  227 201c: c4                     nop                   ; required for 1861 timing
+  228 201d: f8 20                  ldi     20h           ; point dma register at code page
+  229 201f: b0                     phi     r0            ;
+  230 2020: f8 00                  ldi     00h           ; point dma register at code page
+  231 2022: a0                     plo     r0
+  232 2023: 80          refresh:   glo     r0            ; D = r0.0
+  233 2024: e2                     sex     r2            ; X = 2
+  234 2025:                                  ; <----- 8 DMA cycles occur here (R0+8)
+  235 2025: e2                     sex     r2    ; there is time for exactly 6 instruction cycles
+  236 2026: 20                     dec     r0    ; utilized here by 3 two-cycle instructions
+  237 2027: a0                     plo     r0    ; in between dma requests
+  238 2028:                                  ; <----- 8 DMA cycles occur here (R0+8)
+  239 2028: e2                     sex     r2
+  240 2029: 20                     dec     r0
+  241 202a: a0                     plo     r0
+  242 202b:                                  ; <----- 8 DMA cycles occur here (R0+8)
+  243 202b: e2                     sex     r2
+  244 202c: 20                     dec     r0
+  245 202d: a0                     plo     r0
+  246 202e:                                  ; <----- 8 DMA cycles occur here (R0+8)
+  247 202e: 3c 23                  bn1     refresh   ; go to refresh if EF1 false
+  248 2030: 30 14                  br      return    ; return if EF1 true (end of frame)
+  249 2032:
+  250 2032: 69          main:      inp 1             ; Turn on Video
+  251 2033: 3f 33       wait:      bn4     wait      ; wait for Input pressed to exit
+  252 2035: f8 23                  ldi     23H       ; value for x=2, p=3
+  253 2037: 52                     str     r2        ; store on stack for disable instruction
+  254 2038: 71                     dis               ; x=2, p=3 and disable interrupts
+  255 2039: 61                     out 1             ; turn off Video, increments stack
+  256 203a: 22                     dec 2             ; put stack pointer back to original
+  257 203b: c0 03 03               lbr     o_wrmboot ; return to Elf/OS
+  258 203e:
+  259 203e:             ; ***************************************
+  260 203e:             ; Data for spaceship graphic image
+  261 203e:             ; ***************************************
+  262 203e:               org 2040h
+  263 2040: 00 00 00 00
+            00 00 00 00 spaceship: db 00h, 00h,  00h,  00h,  00h,  00h,  00h,  00h
+  264 2048: 00 00 00 00
+            00 00 00 00            db 00h, 00h,  00h,  00h,  00h,  00h,  00h,  00h
+  265 2050: 7b de db de
+            00 00 00 00            db 7Bh, 0DEh, 0DBh, 0DEh, 00h,  00h,  00h,  00h
+  266 2058: 4a 50 da 52
+            00 00 00 00            db 4Ah, 50h,  0DAh, 52h,  00h,  00h,  00h,  00h
+  267 2060: 42 5e ab d0
+            00 00 00 00            db 42h, 5Eh,  0ABh, 0D0h, 00h,  00h,  00h,  00h
+  268 2068: 4a 42 8a 52
+            00 00 00 00            db 4Ah, 42h,  8Ah,  52h,  00h,  00h,  00h,  00h
+  269 2070: 7b de 8a 5e
+            00 00 00 00            db 7Bh, 0DEh, 8Ah,  5Eh,  00h,  00h,  00h,  00h
+  270 2078: 00 00 00 00
+            00 00 00 00            db 00h, 00h,  00h,  00h,  00h,  00h,  00h,  00h
+  271 2080: 00 00 00 00
+            00 00 07 e0            db 00h, 00h,  00h,  00h,  00h,  00h,  07h,  0E0h
+  272 2088: 00 00 00 00
+            ff ff ff ff            db 00h, 00h,  00h,  00h,  0FFh, 0FFh, 0FFh, 0FFh
+  273 2090: 00 06 00 01
+            00 00 00 01            db 00h, 06h,  00h,  01h,  00h,  00h,  00h,  01h
+  274 2098: 00 7f e0 01
+            00 00 00 02            db 00h, 7Fh,  0E0h, 01h,  00h,  00h,  00h,  02h
+  275 20a0: 7f c0 3f e0
+            fc ff ff fe            db 7Fh, 0C0h, 3Fh,  0E0h, 0FCh, 0FFh, 0FFh, 0FEh
+  276 20a8: 40 0f 00 10
+            04 80 00 00            db 40h, 0Fh,  00h,  10h,  04h,  80h,  00h,  00h
+  277 20b0: 7f c0 3f e0
+            04 80 00 00            db 7Fh, 0C0h, 3Fh,  0E0h, 04h,  80h,  00h,  00h
+  278 20b8: 00 3f d0 40
+            04 80 00 00            db 00h, 3Fh,  0D0h, 40h,  04h,  80h,  00h,  00h
+  279 20c0: 00 0f 08 20
+            04 80 7a 1e            db 00h, 0Fh,  08h,  20h,  04h,  80h,  7Ah,  1Eh
+  280 20c8: 00 00 07 90
+            04 80 42 10            db 00h, 00h,  07h,  90h,  04h,  80h,  42h,  10h
+  281 20d0: 00 00 18 7f
+            fc f0 72 1c            db 00h, 00h,  18h,  7Fh,  0FCh, 0F0h, 72h,  1Ch
+  282 20d8: 00 00 30 00
+            00 10 42 10            db 00h, 00h,  30h,  00h,  00h,  10h,  42h,  10h
+  283 20e0: 00 00 73 fc
+            00 10 7b d0            db 00h, 00h,  73h,  0FCh, 00h,  10h,  7Bh,  0D0h
+  284 20e8: 00 00 30 00
+            3f f0 00 00            db 00h, 00h,  30h,  00h,  3Fh,  0F0h, 00h,  00h
+  285 20f0: 00 00 18 0f
+            c0 00 00 00            db 00h, 00h,  18h,  0Fh,  0C0h, 00h,  00h,  00h
+  286 20f8: 00 00 07 f0
+            00 00 00 00            db 00h, 00h,  07h,  0F0h, 00h,  00h,  00h,  00h
+  287 2100:
+  288 2100:             endrom:    equ     $               ; End of code
+
+2006h: BUILD            - <   205>
+ffe0h: CALL             - <    51>
+2002h: DATE             - <   202>
+2100h: ENDROM           - <   288>    184
+f830h: F_ASTODT         - <   120>
+f833h: F_ASTOTM         - <   121>
+ff5dh: F_ATOI           - <    86>
+ff00h: F_BOOT           - <    55>
+ff42h: F_BOOTIDE        - <    77>
+f800h: F_BREAD          - <   104>
+ff6ch: F_BRKTEST        - <    91>
+f806h: F_BTEST          - <   106>
+f803h: F_BTYPE          - <   105>
+ff33h: F_DIV16          - <    72>
+ff2ah: F_DRIVE          - <    69>
+f827h: F_DTTOAS         - <   118>
+ff6fh: F_FINDTKN        - <    92>
+ff57h: F_FREEMEM        - <    84>
+ff81h: F_GETDEV         - <    98>
+f815h: F_GETTOD         - <   111>
+ff45h: F_HEXIN          - <    78>
+ff48h: F_HEXOUT2        - <    79>
+ff4bh: F_HEXOUT4        - <    80>
+f824h: F_IDEID          - <   116>
+ff3ch: F_IDEREAD        - <    75>
+ff36h: F_IDERESET       - <    73>
+f821h: F_IDESIZE        - <   115>
+ff39h: F_IDEWRITE       - <    74>
+ff7bh: F_IDNUM          - <    96>
+ff3fh: F_INITCALL       - <    76>
+ff66h: F_INMSG          - <    89>
+ff0fh: F_INPUT          - <    60>
+ff69h: F_INPUTL         - <    90>
+ff63h: F_INTOUT         - <    88>
+ff78h: F_ISALNUM        - <    95>
+ff72h: F_ISALPHA        - <    93>
+ff75h: F_ISHEX          - <    94>
+ff5ah: F_ISNUM          - <    85>
+ff7eh: F_ISTERM         - <    97>
+ff15h: F_LTRIM          - <    62>
+ff1bh: F_MEMCPY         - <    64>
+ff54h: F_MINIMON        - <    83>
+ff51h: F_MOVER          - <    82>
+ff09h: F_MSG            - <    58>
+ff30h: F_MUL16          - <    71>
+f81bh: F_RDNVR          - <   113>
+ff21h: F_RDSEC          - <    66>
+ff06h: F_READ           - <    57>
+f82dh: F_RTCTEST        - <   119>
+ff27h: F_SEEK           - <    68>
+ff24h: F_SEEK0          - <    67>
+ff2dh: F_SETBD          - <    70>
+f818h: F_SETTOD         - <   112>
+ff12h: F_STRCMP         - <    61>
+ff18h: F_STRCPY         - <    63>
+f82ah: F_TMTOAS         - <   117>
+ff4eh: F_TTY            - <    81>
+ff03h: F_TYPE           - <    56>
+ff0ch: F_TYPEX          - <    59>
+ff60h: F_UINTOUT        - <    87>
+f80ch: F_UREAD          - <   108>
+f812h: F_USETBD         - <   110>
+f80fh: F_UTEST          - <   109>
+f809h: F_UTYPE          - <   107>
+fff9h: F_VERSION        - <   100>
+f81eh: F_WRNVR          - <   114>
+ff1eh: F_WRTSEC         - <    65>
+2016h: INTERRUPT        - <   221>    210
+2032h: MAIN             - <   250>    217    217
+0324h: O_CHDIR          - <   137>
+0300h: O_CLDBOOT        - <   125>
+0312h: O_CLOSE          - <   131>
+0318h: O_DELETE         - <   133>
+031eh: O_EXEC           - <   135>
+0342h: O_EXECBIN        - <   147>
+0339h: O_INPUT          - <   144>
+0348h: O_KINIT          - <   149>
+0321h: O_MKDIR          - <   136>
+0333h: O_MSG            - <   142>
+0306h: O_OPEN           - <   127>
+0315h: O_OPENDIR        - <   132>
+033fh: O_PRINT          - <   146>
+033ch: O_PRTSTAT        - <   145>
+032ah: O_RDLUMP         - <   139>
+0309h: O_READ           - <   128>
+0336h: O_READKEY        - <   143>
+031bh: O_RENAME         - <   134>
+0327h: O_RMDIR          - <   138>
+030fh: O_SEEK           - <   130>
+0345h: O_SETDEF         - <   148>
+0330h: O_TYPE           - <   141>
+030ch: O_WRITE          - <   129>
+032dh: O_WRLUMP         - <   140>
+0303h: O_WRMBOOT        - <   126>    257    257
+2023h: REFRESH          - <   232>    247
+fff1h: RET              - <    52>
+2014h: RETURN           - <   219>    248    248
+0004h: SCALL            - <    48>
+2040h: SPACESHIP        - <   263>
+0005h: SRET             - <    49>
+2009h: START            - <   208>    188    188
+2033h: WAIT             - <   251>    251    251
+
+288 Lines assembled
+0 Errors
+102 Labels
+Object Code:260 bytes
+

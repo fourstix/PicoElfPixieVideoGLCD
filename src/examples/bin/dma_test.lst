@@ -1,0 +1,326 @@
+
+C:\Users\[Your_Path]\elfos>C:\Users\[Your_Path]\rcasm\rcasm.exe -h -l -v -x -dC:\Users\[Your_Path]\rcasm\1802 C:\Users\[Your_Path]\elfos\dma_test 
+1802 -> Native
+2 Classes read.
+231 Patterns read.
+    1 0000:             ;  -------------------------------------------------------------------
+    2 0000:             ;  DMA Video Test
+    3 0000:             ;  Based on Tom Pittman's original Video DMA Program
+    4 0000:             ;  Published in A Short Course in Computer Programming by Tom Pittman
+    5 0000:             ;  Copyright 1979 Netronics Research & Development Ltd.
+    6 0000:             ;
+    7 0000:             ;  Modified to run under the Elf/OS with Pico/Elf Pixie Video
+    8 0000:             ;  Copyright 2021 by Gaston Williams
+    9 0000:             ;  -------------------------------------------------------------------
+   10 0000:             ; *** Based on Elf/OS software written by Michael H Riley
+   11 0000:             ; *** Thanks to the author for making this code available.
+   12 0000:             ; *** Original author copyright notice:
+   13 0000:             ; *******************************************************************
+   14 0000:             ; *** This software is copyright 2004 by Michael H Riley          ***
+   15 0000:             ; *** You have permission to use, modify, copy, and distribute    ***
+   16 0000:             ; *** this software so long as this copyright notice is retained. ***
+   17 0000:             ; *** This software may not be used in commercial applications    ***
+   18 0000:             ; *** without express written permission from the author.         ***
+   19 0000:             ; *******************************************************************
+   20 0000:
+   21 0000:             ; Uncomment the line below to assemble a ROM program
+   22 0000:             ; Comment out to assemble a stand alone program
+   23 0000:             ;#DEFINE _ROM_ 1
+   24 0000:
+   25 0000:             include    bios.inc
+   26 0000:             ; *******************************************************************
+   27 0000:             ; *** This software is copyright 2006 by Michael H Riley          ***
+   28 0000:             ; *** You have permission to use, modify, copy, and distribute    ***
+   29 0000:             ; *** this software so long as this copyright notice is retained. ***
+   30 0000:             ; *** This software may not be used in commercial applications    ***
+   31 0000:             ; *** without express written permission from the author.         ***
+   32 0000:             ; *******************************************************************
+   33 0000:
+            #endif
+   37 0000:
+   38 0000:             ; Define address for standard BIOS vectors
+            #endif
+   42 0000:
+   43 0000:             ; Define address for extended BIOS vectors
+            #endif
+   47 0000:
+            #ifndef _TASM_
+   49 0000:             scall:      equ  r4                    ; register for SCALL
+   50 0000:             sret:       equ  r5                    ; register for SRET
+   51 0000:
+   52 0000:             call:       equ  0ffe0h                ; depricated
+   53 0000:             ret:        equ  0fff1h                ; depricated
+            #endif
+   55 0000:
+   56 0000:             f_boot:     equ  (BIOS+00h)            ; boot from ide device
+   57 0000:             f_type:     equ  (BIOS+03h)            ; type 1 character to console
+   58 0000:             f_read:     equ  (BIOS+06h)            ; read 1 character from console
+   59 0000:             f_msg:      equ  (BIOS+09h)            ; type asciiz string to console
+   60 0000:             f_typex:    equ  (BIOS+0ch)            ; depricated, just returns now
+   61 0000:             f_input:    equ  (BIOS+0fh)            ; read asciiz from console
+   62 0000:             f_strcmp:   equ  (BIOS+12h)            ; compare 2 strings
+   63 0000:             f_ltrim:    equ  (BIOS+15h)            ; trim leading spaces
+   64 0000:             f_strcpy:   equ  (BIOS+18h)            ; copy an asciiz string
+   65 0000:             f_memcpy:   equ  (BIOS+1bh)            ; copy memory
+   66 0000:             f_wrtsec:   equ  (BIOS+1eh)            ; write floppy sector (depricated)
+   67 0000:             f_rdsec:    equ  (BIOS+21h)            ; read floppy sector (depricated)
+   68 0000:             f_seek0:    equ  (BIOS+24h)            ; floppy seek to track 0 (depricated)
+   69 0000:             f_seek:     equ  (BIOS+27h)            ; floopy track seek (depricated)
+   70 0000:             f_drive:    equ  (BIOS+2ah)            ; select floppy drive (depricated)
+   71 0000:             f_setbd:    equ  (BIOS+2dh)            ; set console baud rate
+   72 0000:             f_mul16:    equ  (BIOS+30h)            ; 16-bit multiply
+   73 0000:             f_div16:    equ  (BIOS+33h)            ; 16-bit division
+   74 0000:             f_idereset: equ  (BIOS+36h)            ; reset ide device
+   75 0000:             f_idewrite: equ  (BIOS+39h)            ; write ide sector
+   76 0000:             f_ideread:  equ  (BIOS+3ch)            ; read ide sector
+   77 0000:             f_initcall: equ  (BIOS+3fh)            ; initialize R4 and R5
+   78 0000:             f_bootide:  equ  (BIOS+42h)            ; boot from ide device
+   79 0000:             f_hexin:    equ  (BIOS+45h)            ; convert ascii number to hex
+   80 0000:             f_hexout2:  equ  (BIOS+48h)            ; convert hex to 2-digit ascii
+   81 0000:             f_hexout4:  equ  (BIOS+4bh)            ; convert hex to 4-digit ascii
+   82 0000:             f_tty:      equ  (BIOS+4eh)            ; type character to console
+   83 0000:             f_mover:    equ  (BIOS+51h)            ; program relocator
+   84 0000:             f_minimon:  equ  (BIOS+54h)            ; mini monitor
+   85 0000:             f_freemem:  equ  (BIOS+57h)            ; determine memory size
+   86 0000:             F_isnum:    equ  (BIOS+5ah)            ; determine if D is numeric
+   87 0000:             f_atoi:     equ  (BIOS+5dh)            ; convert ascii to integer
+   88 0000:             f_uintout:  equ  (BIOS+60h)            ; convert unsigned integer to ascii
+   89 0000:             f_intout:   equ  (BIOS+63h)            ; convert signed integer to ascii
+   90 0000:             f_inmsg:    equ  (BIOS+66h)            ; type in-line message
+   91 0000:             f_inputl:   equ  (BIOS+69h)            ; read limited line from console
+   92 0000:             f_brktest:  equ  (BIOS+6ch)            ; check for serial break
+   93 0000:             f_findtkn:  equ  (BIOS+6fh)            ; find token in a token table
+   94 0000:             f_isalpha:  equ  (BIOS+72h)            ; determine if D is alphabetic
+   95 0000:             f_ishex:    equ  (BIOS+75h)            ; determine if D is hexadecimal
+   96 0000:             f_isalnum:  equ  (BIOS+78h)            ; determine if D is alpha or numeric
+   97 0000:             f_idnum:    equ  (BIOS+7bh)            ; determine type of ascii number
+   98 0000:             f_isterm:   equ  (BIOS+7eh)            ; determine if D is a termination char
+   99 0000:             f_getdev:   equ  (BIOS+81h)            ; get supported devices
+  100 0000:
+  101 0000:             f_version:  equ  (BIOS+0f9h)           ; 3 bytes holding bios version number
+  102 0000:
+  103 0000:             ; "Extended" BIOS vectors
+  104 0000:
+  105 0000:             f_bread     equ  (EBIOS+00h)        ; read from onboard serial port
+  106 0000:             f_btype     equ  (EBIOS+03h)        ; write to onboard serial port
+  107 0000:             f_btest     equ  (EBIOS+06h)        ; test onboard serial port
+  108 0000:             f_utype     equ  (EBIOS+09h)        ; write to disk board UART
+  109 0000:             f_uread     equ  (EBIOS+0ch)        ; read from disk board UART
+  110 0000:             f_utest     equ  (EBIOS+0fh)        ; test disk board UART
+  111 0000:             f_usetbd    equ  (EBIOS+12h)        ; set disk board UART baud rate and format
+  112 0000:             f_gettod    equ  (EBIOS+15h)        ; read time of day clock
+  113 0000:             f_settod    equ  (EBIOS+18h)        ; set time of day clock
+  114 0000:             f_rdnvr     equ  (EBIOS+1bh)        ; read non volatile RAM
+  115 0000:             f_wrnvr     equ  (EBIOS+1eh)        ; write non volatile RAM
+  116 0000:             f_idesize   equ  (EBIOS+21h)        ; return size of attached IDE drive(s)
+  117 0000:             f_ideid     equ  (EBIOS+24h)        ; return device data for IDE drive(s)
+  118 0000:             f_tmtoas    equ  (EBIOS+2ah)        ; time to ASCII string
+  119 0000:             f_dttoas    equ  (EBIOS+27h)        ; date to ASCII string
+  120 0000:             f_rtctest   equ  (EBIOS+2dh)        ; test size and presence of RTC/NVR
+  121 0000:             f_astodt    equ  (EBIOS+30h)        ; convert ASCII string to date
+  122 0000:             f_astotm    equ  (EBIOS+33h)        ; convert ASCII string to time
+  123 0000:
+  124 0000:
+  125 0000:             include    kernel.inc
+  126 0000:             O_CLDBOOT: equ     0300h               ; jump to cold boot routine
+  127 0000:             O_WRMBOOT: equ     0303h               ; jump to warm boot routine
+  128 0000:             O_OPEN:    equ     0306h               ; open a file
+  129 0000:             O_READ:    equ     0309h               ; read from file
+  130 0000:             O_WRITE:   equ     030ch               ; write to file
+  131 0000:             O_SEEK:    equ     030fh               ; seek to file position
+  132 0000:             O_CLOSE:   equ     0312h               ; close file
+  133 0000:             O_OPENDIR: equ     0315h               ; open dir as a file
+  134 0000:             O_DELETE:  equ     0318h               ; delete a file
+  135 0000:             O_RENAME:  equ     031bh               ; rename a file
+  136 0000:             O_EXEC:    equ     031eh               ; execute an external program
+  137 0000:             O_MKDIR:   equ     0321h               ; make directory
+  138 0000:             O_CHDIR:   equ     0324h               ; change directory
+  139 0000:             O_RMDIR:   equ     0327h               ; remove directory
+  140 0000:             O_RDLUMP:  equ     032Ah               ; read LAT entry
+  141 0000:             O_WRLUMP:  equ     032Dh               ; write LAT entry
+  142 0000:             O_TYPE:    equ     0330h               ; passthrough for console output
+  143 0000:             O_MSG:     equ     0333h               ; passthrough for console output
+  144 0000:             O_READKEY: equ     0336h               ; passthrough for console input
+  145 0000:             O_INPUT:   equ     0339h               ; passthrough for console input
+  146 0000:             O_PRTSTAT: equ     033ch               ; printer status
+  147 0000:             O_PRINT:   equ     033fh               ; output to printer
+  148 0000:             O_EXECBIN: equ     0342h               ; execute from default directory
+  149 0000:             O_SETDEF:  equ     0345h               ; set/get default directory
+  150 0000:             O_KINIT:   equ     0348h               ; reserved - do not use!!!
+  151 0000:
+            #ENDIF
+  176 0000:
+            #IFNDEF _ROM_
+  178 0000:             ; ************************************************************
+  179 0000:             ; This block generates the Execution header for a stand-alone
+  180 0000:             ; program. It begins 6 bytes before the program start.
+  181 0000:             ; ************************************************************
+  182 0000:
+  183 0000:                        org     02000h-6        ; Header starts at 01ffah
+  184 1ffa: 20 00                  dw      2000h
+  185 1ffc: 00 90                  dw      endrom-2000h
+  186 1ffe: 20 00                  dw      2000h
+            #ENDIF
+  188 2000:
+  189 2000: 30 27                  br      start
+  190 2002:             ; **************************************************
+  191 2002:             ; *** Build information:                         ***
+  192 2002:             ; ***    build date                              ***
+  193 2002:             ; ***    build number                            ***
+  194 2002:             ; ***    information text string                 ***
+  195 2002:             ; **************************************************
+  196 2002:             ; Build date format:
+  197 2002:             ; 80h+month, day, four digit year
+  198 2002:             ; **************************************************
+  199 2002:             ; 80h month offset indicates extended
+  200 2002:             ; build information, with build number and text.
+  201 2002:             ; **************************************************
+  202 2002: 81          date:      db      80h+1  ; Month: January
+  203 2003: 0c                     db      12     ; Day
+  204 2004: 07 e5                  dw      2021   ; Year
+  205 2006:
+  206 2006: 00 03       build:     dw      3      ; build
+  207 2008:
+  208 2008: 43 6f 70 79
+            72 69 67 68
+            74 20 32 30
+            32 31 20 47
+            61 73 74 6f
+            6e 20 57 69
+            6c 6c 69 61
+            6d 73 00               db      'Copyright 2021 Gaston Williams',0
+  209 2027:
+  210 2027:                     ; stack pointer r2 is already set by OS
+  211 2027: f8 23       start:     ldi 023H ; value for x=2; p=3
+  212 2029: 52                     str r2   ; save for disable Int instruction
+  213 202a: 71                     dis      ; Keep x=2; p=3 and disable interrupts
+  214 202b:
+  215 202b: 93                     ghi r3   ; P = 3
+  216 202c: b0                     phi r0   ; set up DMA pointer
+  217 202d: f8 80                  ldi 080H ; point to video Data
+  218 202f: 80                     glo r0   ; set up DMA pointer
+  219 2030:
+  220 2030: 69          Video:     inp 1    ; turn video on
+  221 2031:                        ;------------ DMA occurs here ------------
+  222 2031: f8 80       loop:      ldi 080H ; fix r0
+  223 2033: a0                     plo r0
+  224 2034: 3f 31                  bn4 loop ; continue until input pressed
+  225 2036:                        ; Leave interrupts disabled
+  226 2036: 61                     out 1    ; turn off Video
+  227 2037: c0 03 03               lbr     o_wrmboot       ; return to Elf/OS
+  228 203a:
+  229 203a:
+  230 203a:               org 2080H
+  231 2080:             ; data for video dma
+  232 2080: 80 81 82 83
+            84 85 86 87 buffer: db 080H, 081H, 082H, 083H, 084H, 085H, 086H, 087H
+  233 2088: 88 89 8a 8b
+            8c 8d 8e 8f         db 088H, 089H, 08AH, 08BH, 08CH, 08DH, 08EH, 08FH
+  234 2090:
+  235 2090:             endrom:    equ     $               ; End of code
+
+2080h: BUFFER           - <   232>
+2006h: BUILD            - <   206>
+ffe0h: CALL             - <    52>
+2002h: DATE             - <   202>
+2090h: ENDROM           - <   235>    185
+f830h: F_ASTODT         - <   121>
+f833h: F_ASTOTM         - <   122>
+ff5dh: F_ATOI           - <    87>
+ff00h: F_BOOT           - <    56>
+ff42h: F_BOOTIDE        - <    78>
+f800h: F_BREAD          - <   105>
+ff6ch: F_BRKTEST        - <    92>
+f806h: F_BTEST          - <   107>
+f803h: F_BTYPE          - <   106>
+ff33h: F_DIV16          - <    73>
+ff2ah: F_DRIVE          - <    70>
+f827h: F_DTTOAS         - <   119>
+ff6fh: F_FINDTKN        - <    93>
+ff57h: F_FREEMEM        - <    85>
+ff81h: F_GETDEV         - <    99>
+f815h: F_GETTOD         - <   112>
+ff45h: F_HEXIN          - <    79>
+ff48h: F_HEXOUT2        - <    80>
+ff4bh: F_HEXOUT4        - <    81>
+f824h: F_IDEID          - <   117>
+ff3ch: F_IDEREAD        - <    76>
+ff36h: F_IDERESET       - <    74>
+f821h: F_IDESIZE        - <   116>
+ff39h: F_IDEWRITE       - <    75>
+ff7bh: F_IDNUM          - <    97>
+ff3fh: F_INITCALL       - <    77>
+ff66h: F_INMSG          - <    90>
+ff0fh: F_INPUT          - <    61>
+ff69h: F_INPUTL         - <    91>
+ff63h: F_INTOUT         - <    89>
+ff78h: F_ISALNUM        - <    96>
+ff72h: F_ISALPHA        - <    94>
+ff75h: F_ISHEX          - <    95>
+ff5ah: F_ISNUM          - <    86>
+ff7eh: F_ISTERM         - <    98>
+ff15h: F_LTRIM          - <    63>
+ff1bh: F_MEMCPY         - <    65>
+ff54h: F_MINIMON        - <    84>
+ff51h: F_MOVER          - <    83>
+ff09h: F_MSG            - <    59>
+ff30h: F_MUL16          - <    72>
+f81bh: F_RDNVR          - <   114>
+ff21h: F_RDSEC          - <    67>
+ff06h: F_READ           - <    58>
+f82dh: F_RTCTEST        - <   120>
+ff27h: F_SEEK           - <    69>
+ff24h: F_SEEK0          - <    68>
+ff2dh: F_SETBD          - <    71>
+f818h: F_SETTOD         - <   113>
+ff12h: F_STRCMP         - <    62>
+ff18h: F_STRCPY         - <    64>
+f82ah: F_TMTOAS         - <   118>
+ff4eh: F_TTY            - <    82>
+ff03h: F_TYPE           - <    57>
+ff0ch: F_TYPEX          - <    60>
+ff60h: F_UINTOUT        - <    88>
+f80ch: F_UREAD          - <   109>
+f812h: F_USETBD         - <   111>
+f80fh: F_UTEST          - <   110>
+f809h: F_UTYPE          - <   108>
+fff9h: F_VERSION        - <   101>
+f81eh: F_WRNVR          - <   115>
+ff1eh: F_WRTSEC         - <    66>
+2031h: LOOP             - <   222>    224    224
+0324h: O_CHDIR          - <   138>
+0300h: O_CLDBOOT        - <   126>
+0312h: O_CLOSE          - <   132>
+0318h: O_DELETE         - <   134>
+031eh: O_EXEC           - <   136>
+0342h: O_EXECBIN        - <   148>
+0339h: O_INPUT          - <   145>
+0348h: O_KINIT          - <   150>
+0321h: O_MKDIR          - <   137>
+0333h: O_MSG            - <   143>
+0306h: O_OPEN           - <   128>
+0315h: O_OPENDIR        - <   133>
+033fh: O_PRINT          - <   147>
+033ch: O_PRTSTAT        - <   146>
+032ah: O_RDLUMP         - <   140>
+0309h: O_READ           - <   129>
+0336h: O_READKEY        - <   144>
+031bh: O_RENAME         - <   135>
+0327h: O_RMDIR          - <   139>
+030fh: O_SEEK           - <   131>
+0345h: O_SETDEF         - <   149>
+0330h: O_TYPE           - <   142>
+030ch: O_WRITE          - <   130>
+032dh: O_WRLUMP         - <   141>
+0303h: O_WRMBOOT        - <   127>    227    227
+fff1h: RET              - <    53>
+0004h: SCALL            - <    49>
+0005h: SRET             - <    50>
+2027h: START            - <   211>    189    189
+2030h: VIDEO            - <   220>
+
+235 Lines assembled
+0 Errors
+99 Labels
+Object Code:80 bytes
+
