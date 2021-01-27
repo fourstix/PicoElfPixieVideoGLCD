@@ -2,7 +2,7 @@
 Teensy 3.2 based Pixie Video simulator for the 1802 Pico/Elf v2 microcomputer using a GLCD with SPI
 
 This code simulates a cdp1861 Pixie Video chip, using a [Teensy 3.2.](https://www.pjrc.com/store/teensy32.html)
-This [simulator](https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/master/docs/PicoELfPixieVideoGLCD.pdf)
+This [simulator](https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/main/docs/PicoELfPixieVideoGLCD.pdf)
 uses a video ram buffer with a 128 x 64 graphics display supported by the
 [U8G2 graphics library](https://github.com/olikraus/u8g2) as a video display.  The code will simulate
 the interrupts, external flag 1 signal, and DMA Output requests from the original pixie video.  This
@@ -22,13 +22,13 @@ Based on the Pico/Elf v2 hardware by Mike Riley. Information about the Pico/Elf 
 Examples
 ---------------------
 Here are some examples running actual CDP1802 programs modified for the Elf/OS on the Pico/Elf v2 Hardware
-with the PicoElfVideoGLCD simulator.  These examples were compiled with the [RcAsm 1802 Assmbler](https://github.com/rileym65/RcAsm).
+with the PicoElfVideoGLCD simulator.  These examples were compiled with the [RcAsm 1802 Assmbler](https://github.com/rileym65/RcAsm).  Documentation for RcAsm can be found at [Elf-Emulation.com/RcAsm](http://www.elf-emulation.com/rcasm.html).
 
 <table class="table table-hover table-striped table-bordered">
   <tr align="center">
-   <td><img src="https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/master/pics/spaceship.jpg"></td>
-   <td><img src="https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/master/pics/dma_test.jpg"></td>
-   <td><img src="https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/master/pics/tvclock.jpg"></td>
+   <td><img src="https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/main/pics/spaceship.jpg"></td>
+   <td><img src="https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/main/pics/dma_test.jpg"></td>
+   <td><img src="https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/main/pics/tvclock.jpg"></td>
   </tr>
   <tr align="center">
     <td>Close up of 128x64 ST7920 GLCD display with 1802 Pico/Elf v2 running Cosmac Elf Spaceship program.</td>
@@ -36,14 +36,15 @@ with the PicoElfVideoGLCD simulator.  These examples were compiled with the [RcA
     <td>Close up of 128x64 ST7920 GLCD display with 1802 Pico/Elf v2 running Tom Pittman's TV Clock program.</td>
   </tr>
   <tr align="center">
-     <td colspan="3"><img src="https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/master/pics/schematic.jpg"></td>
+     <td colspan="3"><img src="https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/main/pics/schematic.jpg"></td>
   </tr>
   <tr align="center">
      <td colspan="3">Pico/Elf Pixie Video GLCD Hardware Schematic</td>
   </tr>
 </table>
+
 Notes
------
+---------------------
 * **Video resolution**  
   * Resolutions of 64 x 64 and 32 x 64 are directly supported.
   * For 128 x 64 and other resolutions, video data will be captured on every other DMA request (as per a 64 x 64 resolution).
@@ -62,7 +63,7 @@ Notes
   * There are a minimum of 6350 instruction cycles (given a 4MHz clock) between frames to simulate the blanking period.
   * Software for the 1802 that rely on these control timings will work with this simulator. (If not, please open an issue.)
   * Timing details are documented in the code comments.
-* **Teensy Port 1 Interrupt**
+* **Teensy Port 1 Interrupts**
   * The Port 1, /INP and /Out signals on the Pico/Elf Expansion connector trigger interrupts on the Teensy 3.2 to turn video on or off.
   * Input and Output to Port 1 is used to turn video on or off.
   * INP 1, 1802 opcode 69 (PORT1 = LOW, /INP = LOW) turns video on.
