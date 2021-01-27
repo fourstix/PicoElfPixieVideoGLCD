@@ -99,6 +99,31 @@ Repository Contents
   * PicoElfPixieVideoGLCD-KiCad4.zip -- KiCad4 project files for Pico/Elf Pixie Video GLCD PCB.
   * PicoElfPixieVideoGLCD-gerbers.zip -- Gerber files for Pico/Elf Pixie Video GLCD PCB.
 
+  Pico/Elf v2 Expansion Connector
+  -------------------------------
+<table>
+<tr><td>A0</td><td>1</td><td>2</td><td>D0</td></tr>
+<tr><td>A1</td><td>3</td><td>4</td><td>D1</td></tr>
+<tr><td>A2</td><td>5</td><td>6</td><td>D2</td></tr>
+<tr><td>A3</td><td>7</td><td>8</td><td>D3</td></tr>
+<tr><td>A4</td><td>9</td><td>10</td><td>D4</td></tr>
+<tr><td>A5</td><td>11</td><td>12</td><td>D5</td></tr>
+<tr><td>A6</td><td>13</td><td>14</td><td>D6</td></tr>
+<tr><td>A7</td><td>15</td><td>16</td><td>D7</td></tr>
+<tr><td>TPA</td><td>17</td><td>18</td><td>TPB</td></tr>
+<tr><td>/INP</td><td>19</td><td>20</td><td>EF1</td></tr>
+<tr><td>/OUT</td><td>21</td><td>22</td><td>EF2</td></tr>
+<tr><td>PORT1</td><td>23</td><td>24</td><td>EF3</td></tr>
+<tr><td>/DMA_IN</td><td>25</td><td>26</td><td>EF4</td></tr>
+<tr><td>/DMA_OUT</td><td>27</td><td>28</td><td>INT</td></tr>
+<tr><td>/MRD</td><td>29</td><td>30</td><td>/MWR</td></tr>
+<tr><td>SC0</td><td>31</td><td>32</td><td>SC1</td></tr>
+<tr><td>Q</td><td>33</td><td>34</td><td>GND</td></tr>
+<tr><td>PORT2</td><td>35</td><td>36</td><td>PORT5</td></tr>
+<tr><td>PORT3</td><td>37</td><td>38</td><td>PORT6</td></tr>
+<tr><td>PORT4</td><td>39</td><td>40</td><td>PORT7</td></tr>
+</table>
+
   License Information
   -------------------
 
