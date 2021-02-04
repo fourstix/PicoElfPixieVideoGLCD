@@ -99,8 +99,23 @@ Repository Contents
   * PicoElfPixieVideoGLCD-KiCad4.zip -- KiCad4 project files for Pico/Elf Pixie Video GLCD PCB.
   * PicoElfPixieVideoGLCD-gerbers.zip -- Gerber files for Pico/Elf Pixie Video GLCD PCB.
 
-  Pico/Elf v2 Expansion Connector
-  -------------------------------
+GLCD Display connections
+------------------------
+<table>
+<tr><th colspan="2">GLCD</th><th colspan="2">Teensy 3.2</th></tr>
+<tr><td>1</td><td>GND</td><td>GND</td><td>&nbsp;</td></tr>
+<tr><td>2</td><td>VCC</td><td>+5v</td><td>&nbsp;</td></tr>
+<tr><td>4</td><td>RS</td><td>CS</td><td>D10</td></tr>
+<tr><td>5</td><td>R/W</td><td>MOSI</td><td>D11</td></tr>
+<tr><td>6</td><td>E</td><td>SCK</td><td>D13</td></tr>
+<tr><td>15</td><td>PSD</td><td>GND</td><td>&nbsp;</td></tr>
+<tr><td>17</td><td>RST</td><td>RST</td><td>D23</td></tr>
+<tr><td>19</td><td>BLA</td><td>+5v</td><td>&nbsp;</td></tr>
+<tr><td>20</td><td>BLK</td><td>GND</td><td>&nbsp;</td></tr>
+</table>
+
+Pico/Elf v2 Expansion Connector
+-------------------------------
 <table>
 <tr><td>A0</td><td>1</td><td>2</td><td>D0</td></tr>
 <tr><td>A1</td><td>3</td><td>4</td><td>D1</td></tr>
@@ -166,7 +181,7 @@ Repository Contents
 
   The MIT License (MIT)
 
-  Copyright (c) 2020 by Gaston Williams
+  Copyright (c) 2021 by Gaston Williams
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
