@@ -41,6 +41,12 @@ with the PicoElfVideoGLCD simulator.  These examples were compiled with the [RcA
   <tr align="center">
      <td colspan="3">Pico/Elf Pixie Video GLCD Hardware Schematic</td>
   </tr>
+  <tr align="center">
+     <td colspan="3"><img src="https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/main/pics/all_three.jpg"></td>
+  </tr>
+  <tr align="center">
+     <td colspan="3">Pico/Elf v2 running with an STG RTC/NVR card and a Pixie Video GLCD Card connected by an IDE cable.</td>
+  </tr>
 </table>
 
 Notes
