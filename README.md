@@ -99,19 +99,19 @@ Repository Contents
   * PicoElfPixieVideoGLCD-KiCad4.zip -- KiCad4 project files for Pico/Elf Pixie Video GLCD PCB.
   * PicoElfPixieVideoGLCD-gerbers.zip -- Gerber files for Pico/Elf Pixie Video GLCD PCB.
 
-GLCD Display connections
+GLCD Display Connections
 ------------------------
 <table>
-<tr><th colspan="2">GLCD</th><th colspan="2">Teensy 3.2</th></tr>
-<tr><td>1</td><td>GND</td><td>GND</td><td>&nbsp;</td></tr>
-<tr><td>2</td><td>VCC</td><td>+5v</td><td>&nbsp;</td></tr>
-<tr><td>4</td><td>RS</td><td>CS</td><td>D10</td></tr>
-<tr><td>5</td><td>R/W</td><td>MOSI</td><td>D11</td></tr>
-<tr><td>6</td><td>E</td><td>SCK</td><td>D13</td></tr>
-<tr><td>15</td><td>PSD</td><td>GND</td><td>&nbsp;</td></tr>
-<tr><td>17</td><td>RST</td><td>RST</td><td>D23</td></tr>
-<tr><td>19</td><td>BLA</td><td>+5v</td><td>&nbsp;</td></tr>
-<tr><td>20</td><td>BLK</td><td>GND</td><td>&nbsp;</td></tr>
+<tr><th>GLCD</th><th>Pin</th><th>Teensy</th><th>Pin</th></tr>
+<tr><td>GND</td><td>1</td><td>GND</td><td>&nbsp;</td></tr>
+<tr><td>VCC</td><td>2</td><td>+5v</td><td>&nbsp;</td></tr>
+<tr><td>RS</td><td>4</td><td>CS</td><td>D10</td></tr>
+<tr><td>R/W</td><td>5</td><td>MOSI</td><td>D11</td></tr>
+<tr><td>E</td><td>6</td><td>SCK</td><td>D13</td></tr>
+<tr><td>PSD</td><td>15</td><td>GND</td><td>&nbsp;</td></tr>
+<tr><td>RST</td><td>17</td><td>RST</td><td>D23</td></tr>
+<tr><td>BLA</td><td>19</td><td>+5v</td><td>&nbsp;</td></tr>
+<tr><td>BLK</td><td>20</td><td>GND</td><td>&nbsp;</td></tr>
 </table>
 
 Pico/Elf v2 Expansion Connector
