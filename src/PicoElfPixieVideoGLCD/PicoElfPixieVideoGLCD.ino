@@ -67,7 +67,7 @@
 
 
 /* Set DEBUG to 1 to include debug code
- * Debug statements need to be uncommented because
+ * Many debug statements need to be uncommented because
  * they will affect the timing in the video logic.
  */
 #define DEBUG 0
@@ -215,8 +215,8 @@ volatile byte state = VIDEO_OFF;
  *  RST   17        23
  *  PSD   15        GND
  *  
- *  E      6        13 MOSI
- *  R/W    5        11 SCK
+ *  E      6        13 SCK
+ *  R/W    5        11 MOSI
  *  RS     4        10 CS
  *  
  *  VCC    2        +5V
@@ -438,14 +438,13 @@ void doVideoState() {
           capture_frame = !redraw;                 
           changed = false;
           } //if isDmaAck
-      } else {          
+      } else {      
+//        #if DEBUG            
 //            if (isInterrupt()) {
-//            #if DEBUG
 //                  Serial.print(F("Interrupt: "));
 //                  Serial.println(cycles);
-//                }
-//            #endif
 //            } // if isInterrupt
+//        #endif
       } // if-else cycles      
     break;
 /*
@@ -894,6 +893,8 @@ void loop(void) {
     pixie_video = false;
     stopVideo();
     setupVideo();
+    //Wait for dust to settle
+    delay(1000);
 //    #if DEBUG
 //      Serial.println("Ready!");
 //    #endif    
