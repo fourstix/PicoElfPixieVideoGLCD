@@ -1,10 +1,12 @@
 # PicoElfPixieVideoGLCD
 Teensy 3.2 based Pixie Video simulator for the 1802 Pico/Elf v2 microcomputer using a GLCD with SPI
 
-Version 2
----------
-An improved version of this hardware and code is available as the [PicoELfPixieVideoGLCDV2](https://github.com/fourstix/PicoELfPixieVideoGLCDV2) project.  The second version adds support for showing data from Port 4 on the display when it is not used for Pixie Video, along with an LED to show the status of the 1802 Q-bit.
+Version 2 Now Available
+-----------------------
+An improved version of this hardware and code is available in the [PicoELfPixieVideoGLCDV2](https://github.com/fourstix/PicoELfPixieVideoGLCDV2) project.  The second version adds support for showing data from Port 4 on the display when it is not used for Pixie Video, along with an LED to show the status of the 1802 Q-bit.
 
+Introduction
+------------
 This code simulates a cdp1861 Pixie Video chip, using a [Teensy 3.2.](https://www.pjrc.com/store/teensy32.html)
 This [simulator](https://github.com/fourstix/PicoElfPixieVideoGLCD/blob/main/docs/PicoElfPixieVideoGLCD.pdf)
 uses a video ram buffer with a 128 x 64 graphics display supported by the
